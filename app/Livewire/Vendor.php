@@ -9,6 +9,7 @@ class Vendor extends Component
 {
     public $vendors, $name, $description, $vendor_id;
     public $updateVendor = false;
+    public $openingModal = false;
     protected $listeners = [
         'deleteVendor' => 'destroy'
     ];
@@ -18,9 +19,14 @@ class Vendor extends Component
         'description' => 'required'
     ];
 
+    public function openModal()
+    {
+        $this->openingModal = true;
+    }
+
     public function render()
     {
-        $this->vendors = VendorModel::select('id', 'name', 'description')->get();
+        $this->vendors = VendorModel::select('id', 'name', 'description')->orderby('id', 'desc')->get();
         return view('livewire.vendor');
     }
     public function resetFields()
@@ -43,6 +49,8 @@ class Vendor extends Component
             session()->flash('success', 'Vendor Created Successfully!!');
             // Reset Form Fields After Creating Vendor
             $this->resetFields();
+
+            $this->openingModal = false;
         } catch (\Exception $e) {
             // Set Flash Message
             session()->flash('error', 'Something goes wrong while creating vendor!!');
@@ -57,6 +65,7 @@ class Vendor extends Component
         $this->description = $vendor->description;
         $this->vendor_id = $vendor->id;
         $this->updateVendor = true;
+        $this->openingModal = true;
     }
     public function cancel()
     {
@@ -73,13 +82,14 @@ class Vendor extends Component
                 'name' => $this->name,
                 'description' => $this->description
             ])->save();
-            session()->flash('success', 'Vendor Updated Successfully!!');
+            session()->flash('success', 'Vendor Updated Successfully!');
 
             $this->cancel();
         } catch (\Exception $e) {
-            session()->flash('error', 'Something goes wrong while updating vendor!!');
+            session()->flash('error', 'Something goes wrong while updating vendor!');
             $this->cancel();
         }
+        $this->openingModal = false;
     }
     public function destroy($id)
     {
