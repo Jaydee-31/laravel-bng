@@ -36,14 +36,7 @@
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                                                 Title
                                             </th>
-                                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                                                Content
-                                            </th>
-                                            @can('admin_access')
-                                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                                                    Author
-                                                </th>
-                                            @endcan
+                        
                                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                 
                                             </th>
@@ -70,11 +63,11 @@
 
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                             
-                                                <a wire:click="edit({{$vendor->id}})" class="text-blue-600 dark:text-blue-500 hover:text-blue-900 mb-2 mr-2">Edit</a>
+                                                <button wire:click="edit({{$vendor->id}})" class="text-blue-600 dark:text-blue-500 hover:text-blue-900 mr-4 ">Edit</button>
                                                 
                                                  
                                                 <button  wire:click="destroy({{$vendor->id}})"
-                                                    wire:confirm="Are you sure you want to delete this record?" type="button" class="text-red-600 dark:text-red-400 hover:text-red-900 cursor-pointer mb-2 mr-2"
+                                                    wire:confirm="Are you sure you want to delete this record?" type="button" class="text-red-600 dark:text-red-400 hover:text-red-900 cursor-pointer mr-2"
                                                     >
                                                     Delete 
                                                 </button>
