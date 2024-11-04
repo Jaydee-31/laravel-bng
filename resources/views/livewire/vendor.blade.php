@@ -45,8 +45,8 @@
                             </thead>
 
                             <tbody class="bg-white dark:bg-gray-800 dark:bg-opacity-50 divide-y divide-gray-200 dark:divide-gray-700">
-                                @if (!$vendors->isEmpty())
-                                @foreach ($vendors as $vendor)
+
+                                @forelse($vendors as $vendor)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                         {{ $vendor->id }}
@@ -69,14 +69,13 @@
                                         </button>
                                     </td>
                                 </tr>
-                                @endforeach
-                                @else
+                                @empty
                                 <tr>
-                                    <td class="flex justify-center">
+                                    <td colspan="4" class="px-6 py-4 dark:text-white text-sm leading-5 text-gray-900 whitespace-no-wrap">
                                         No Vendors Found.
                                     </td>
                                 </tr>
-                                @endif
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
