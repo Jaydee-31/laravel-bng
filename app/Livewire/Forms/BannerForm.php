@@ -8,9 +8,16 @@ use Livewire\Form;
 
 class BannerForm extends Form
 {
-    public string $name = '';
-    public string $description = '';
+    public ?Banner $banner;
+    public $name = '';
+    public $description = '';
 
+    public function setBanner(Banner $banner)
+    {
+        $this->banner = $banner;
+        $this->name = $banner->name;
+        $this->description = $banner->description;
+    }
     public function store(): void
     {
         $this->validate();
@@ -18,6 +25,13 @@ class BannerForm extends Form
 
         $this->reset();
 
+    }
+    public function update()
+    {
+        $this->validate();
+        $this->banner->update($this->only(['name', 'description']));
+
+        $this->reset();
     }
 
     public function rules(): array

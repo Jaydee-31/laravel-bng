@@ -10,11 +10,19 @@ class BannerList extends Component
 {
     public BannerForm $form;
     public $openBannerModal = false;
+    public $isEditMode = false;
 
-    public function openModal(): void
+    public function openModal(?Banner $banner = null): void
     {
+        if ($banner) {
+            $this->form->setBanner($banner);
+            $this->isEditMode = true;
+        } else {
+            $this->isEditMode = false;
+        }
         $this->openBannerModal = true;
     }
+
     public function render()
     {
         return view('livewire.banner.banner-list', [
@@ -24,9 +32,19 @@ class BannerList extends Component
 
     public function save()
     {
-        $this->form->store();
+        if ($this->isEditMode) {
+            $this->form->update();
+        } else {
+            $this->form->store();
+        }
 
         $this->openBannerModal = false;
+    }
+
+    public function cancel()
+    {
+        $this->openBannerModal = false;
+        $this->form->reset();
     }
 
 }

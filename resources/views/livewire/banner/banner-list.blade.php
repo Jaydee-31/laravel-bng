@@ -43,7 +43,7 @@
                                         {{ $banner->description }}
                                     </td>
                                     <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
-                                        {{-- Edit Button --}}
+                                        <button wire:click="openModal({{ $banner->id }})" class="text-blue-600 dark:text-blue-500 hover:text-blue-900 mr-4 ">Edit</button>
                                     </td>
                                 </tr>
                             @empty
