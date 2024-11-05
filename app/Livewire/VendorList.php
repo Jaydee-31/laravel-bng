@@ -2,10 +2,10 @@
 
 namespace App\Livewire;
 
-use App\Models\Vendor as VendorModel;
+use App\Models\Vendor;
 use Livewire\Component;
 
-class Vendor extends Component
+class VendorList extends Component
 {
     public $vendors, $name, $description, $vendor_id;
     public $updateVendor = false;
@@ -26,8 +26,8 @@ class Vendor extends Component
 
     public function render()
     {
-        $this->vendors = VendorModel::select('id', 'name', 'description')->orderby('id', 'desc')->get();
-        return view('livewire.vendors.index');
+        $this->vendors = Vendor::select('id', 'name', 'description')->orderby('id', 'desc')->get();
+        return view('livewire.vendors.vendor-list');
     }
     public function resetFields()
     {
@@ -40,7 +40,7 @@ class Vendor extends Component
         $this->validate();
         try {
             // Create Vendor
-            VendorModel::create([
+            Vendor::create([
                 'name' => $this->name,
                 'description' => $this->description
             ]);
@@ -60,7 +60,7 @@ class Vendor extends Component
     }
     public function edit($id)
     {
-        $vendor = VendorModel::findOrFail($id);
+        $vendor = Vendor::findOrFail($id);
         $this->name = $vendor->name;
         $this->description = $vendor->description;
         $this->vendor_id = $vendor->id;
@@ -78,7 +78,7 @@ class Vendor extends Component
         $this->validate();
         try {
             // Update vendor
-            VendorModel::find($this->vendor_id)->fill([
+            Vendor::find($this->vendor_id)->fill([
                 'name' => $this->name,
                 'description' => $this->description
             ])->save();
@@ -94,7 +94,7 @@ class Vendor extends Component
     public function destroy($id)
     {
         try {
-            VendorModel::find($id)->delete();
+            Vendor::find($id)->delete();
             session()->flash('success', "Vendor Deleted Successfully!!");
         } catch (\Exception $e) {
             session()->flash('error', "Something goes wrong while deleting vendor!!");
