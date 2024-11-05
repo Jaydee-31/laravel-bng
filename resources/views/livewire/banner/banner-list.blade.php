@@ -44,6 +44,14 @@
                                     </td>
                                     <td class="px-6 py-4 text-sm leading-5 text-gray-900 whitespace-no-wrap">
                                         <button wire:click="openModal({{ $banner->id }})" class="text-blue-600 dark:text-blue-500 hover:text-blue-900 mr-4 ">Edit</button>
+                                        <x-danger-button
+                                            class="ms-3"
+                                            type="button"
+                                            wire:click="delete({{ $banner->id }})"
+                                            wire:confirm="Are you sure you want to delete this record?"
+                                        >
+                                            Delete
+                                        </x-danger-button>
                                     </td>
                                 </tr>
                             @empty

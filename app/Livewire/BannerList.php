@@ -47,4 +47,15 @@ class BannerList extends Component
         $this->form->reset();
     }
 
+    public function archive()
+    {
+        //
+    }
+
+    public function delete(?Banner $banner = null)
+    {
+        $banner?->delete();
+    }
+
+
 }
