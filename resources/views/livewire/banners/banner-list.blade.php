@@ -33,17 +33,17 @@
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 w-full">
                                 <thead>
                                     <tr>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider dark:text-gray-100 ">
                                             ID
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                                            Image
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider dark:text-gray-100">
+                                            Name
                                         </th>
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
-                                            Title
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider dark:text-gray-100">
+                                            Description
                                         </th>
 
-                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider dark:text-gray-100">
 
                                         </th>
                                     </tr>
