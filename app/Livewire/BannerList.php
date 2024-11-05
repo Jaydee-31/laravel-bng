@@ -34,8 +34,10 @@ class BannerList extends Component
     {
         if ($this->isEditMode) {
             $this->form->update();
+            session()->flash('success', 'Vendor Updated Successfully!!');
         } else {
             $this->form->store();
+            session()->flash('success', 'Vendor Created Successfully!!');
         }
 
         $this->openBannerModal = false;
@@ -55,7 +57,7 @@ class BannerList extends Component
     public function delete(?Banner $banner = null)
     {
         $banner?->delete();
+        session()->flash('success', 'Vendor Deleted Successfully!!');
     }
-
 
 }
