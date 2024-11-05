@@ -1,4 +1,10 @@
 <div>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Vendors') }}
+        </h2>
+    </x-slot>
+
     <div class="col-md-8 mb-2">
         @if(session()->has('success'))
                     <x-alert>
@@ -11,9 +17,9 @@
                     </x-alert>
                 @endif
                 @if($updateVendor)
-                    @include('livewire.update')
+                    @include('livewire.vendors.update')
                 @else
-                    @include('livewire.create')
+                    @include('livewire.vendors.create')
                 @endif
     </div>
     <div>

@@ -17,4 +17,5 @@ Route::middleware([
     })->name('dashboard');
 
     Route::get('/banners', BannerList::class)->name('banners');
+    Route::get('/vendors', \App\Livewire\Vendor::class)->name('vendors');
 });
