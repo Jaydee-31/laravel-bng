@@ -19,7 +19,7 @@
                     </x-alert>
                 @endif
             </div>
-            
+
             <x-button wire:click="openModal" wire:loading.attr="disabled">
                 {{ __('Add') }}
             </x-button>
