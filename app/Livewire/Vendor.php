@@ -29,7 +29,7 @@ class Vendor extends Component
         $this->vendors = VendorModel::select('id', 'name', 'description')->orderby('id', 'desc')->get();
         return view('livewire.vendors.index');
     }
-    public function resetFields()re
+    public function resetFields()
     {
         $this->name = '';
         $this->description = '';
