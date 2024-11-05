@@ -66,8 +66,8 @@
 
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                 <button wire:click="openModal({{ $banner->id }})" class="text-blue-600 dark:text-blue-500 hover:text-blue-900 mr-4 ">Edit</button>
-                                                <button  wire:click="delete({{ $banner->id }})"
-                                                         wire:confirm="Are you sure you want to delete this record?" type="button" class="text-red-600 dark:text-red-400 hover:text-red-900 cursor-pointer mr-2"
+                                                <button wire:click="delete({{ $banner->id }})"
+                                                        wire:confirm="Are you sure you want to delete this record?" type="button" class="text-red-600 dark:text-red-400 hover:text-red-900 cursor-pointer mr-2"
                                                 >
                                                     Delete
                                                 </button>
