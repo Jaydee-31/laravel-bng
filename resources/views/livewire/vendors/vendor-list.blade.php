@@ -16,23 +16,24 @@
                 {{ session()->get('error') }}
             </x-alert>
         @endif
-        @if($updateVendor)
-            @include('livewire.vendors.update')
-        @else
-            @include('livewire.vendors.create')
-        @endif
     </div>
     <div>
         <x-button wire:click="openModal" wire:loading.attr="disabled">
             {{ __('Add') }}
         </x-button>
 
+        @if($updateVendor)
+            @include('livewire.vendors.update')
+        @else
+            @include('livewire.vendors.create')
+        @endif
+
         <div class="col-md-8">
             <div class="card">
-                <div class="card-body">
+                <div class="overflow-hidden overflow-x-auto card-body">
                     <div class="table-responsive">
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 w-full">
-                            <thead class="bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 opacity">
+                            <thead>
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                                     ID

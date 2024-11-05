@@ -12,10 +12,10 @@ class BannerList extends Component
     public $openBannerModal = false;
     public $isEditMode = false;
 
-    public function openModal(?Banner $banner = null): void
+    public function openModal(?int $bannerId = null): void
     {
-        if ($banner) {
-            $this->form->setBanner($banner);
+        if ($bannerId) {
+            $this->form->setBanner(Banner::findOrFail($bannerId));
             $this->isEditMode = true;
         } else {
             $this->isEditMode = false;
@@ -25,7 +25,7 @@ class BannerList extends Component
 
     public function render()
     {
-        return view('livewire.banner.banner-list', [
+        return view('livewire.banners.banner-list', [
             'banners' => Banner::all(),
         ]);
     }
