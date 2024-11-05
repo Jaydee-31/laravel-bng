@@ -4,9 +4,11 @@ namespace App\Livewire;
 
 use App\Models\Vendor;
 use Livewire\Component;
+use Illuminate\Database\Eloquent\Builder;
 
 class VendorList extends Component
 {
+    public $search = '';
     public $vendors, $name, $description, $vendor_id;
     public $updateVendor = false;
     public $openingModal = false;
@@ -26,8 +28,14 @@ class VendorList extends Component
 
     public function render()
     {
-        $this->vendors = Vendor::select('id', 'name', 'description')->orderby('id', 'desc')->get();
-        return view('livewire.vendors.vendor-list');
+        $this->vendors = Vendor::select('id', 'name', 'description')
+            ->when($this->search !== '', fn(Builder $query) => $query->where('name', 'like', '%'. $this->search .'%'))
+            ->orderby('id', 'desc')
+            ->get();
+
+        return view('livewire.vendors.vendor-list', [
+            'vendors' => $this->vendors,
+        ]);
     }
     public function resetFields()
     {

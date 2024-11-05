@@ -18,9 +18,12 @@
         @endif
     </div>
     <div>
-        <x-button wire:click="openModal" wire:loading.attr="disabled">
-            {{ __('Add') }}
-        </x-button>
+        <div class="flex justify-between">
+            <x-button wire:click="openModal" wire:loading.attr="disabled">
+                {{ __('Add') }}
+            </x-button>
+            <x-input wire:model.live="search" type="text" placeholder="Search vendors.."/>
+        </div>
 
         @if($updateVendor)
             @include('livewire.vendors.update')
