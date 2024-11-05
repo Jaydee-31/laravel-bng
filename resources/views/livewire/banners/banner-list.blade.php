@@ -27,7 +27,7 @@
 
             @include('livewire.banners.banner-form')
 
-            <div class="col-md-8">
+            <div class="col-md-8 mt-6">
                 <div class="card">
                     <div class="overflow-hidden overflow-x-auto card-body">
                         <div class="table-responsive">
