@@ -5,22 +5,21 @@
         </h2>
     </x-slot>
 
-    <div class="col-md-8 mb-2">
-        @if(session()->has('success'))
-            <x-alert>
-                {{ session()->get('success') }}
-            </x-alert>
-        @endif
-        @if(session()->has('error'))
-            <x-alert>
-                {{ session()->get('error') }}
-            </x-alert>
-        @endif
-    </div>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
+            <div class="col-md-8 mb-2">
+                @if(session()->has('success'))
+                    <x-alert>
+                        {{ session()->get('success') }}
+                    </x-alert>
+                @endif
+                @if(session()->has('error'))
+                    <x-alert>
+                        {{ session()->get('error') }}
+                    </x-alert>
+                @endif
+            </div>
+            
             <x-button wire:click="openModal" wire:loading.attr="disabled">
                 {{ __('Add') }}
             </x-button>
