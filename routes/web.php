@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\BannerList;
+use App\Livewire\CountryList;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -21,4 +22,5 @@ Route::middleware([
     })->name('vendors');
 
     Route::get('/banners', BannerList::class)->name('banners');
+    Route::get('/countries', CountryList::class)->name('countries');
 });

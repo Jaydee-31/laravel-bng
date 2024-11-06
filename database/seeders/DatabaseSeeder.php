@@ -19,5 +19,11 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'admin@admin.com',
         ]);
+
+        $this->call([
+            CountrySeeder::class,
+            // BannerSeeder::class,
+            // VendorSeeder::class,
+        ]);
     }
 }
