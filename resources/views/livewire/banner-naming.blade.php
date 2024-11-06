@@ -15,7 +15,7 @@ new class extends Component {
     public $selectedBanner = NULL;
     public $selectedVendor = NULL;
     public $campaign;
-    public $id;
+    public $campaign_id;
     public $output = NULL;
 
     public function mount()
@@ -46,19 +46,19 @@ new class extends Component {
         $vendor = strtolower($this->selectedVendor);
         $campaign = str_replace(' ', '', ucwords($this->campaign));
 
-        $this->output = "{$vendor}_{$this->calendarWeek}_{$campaign}_{$this->selectedBanner}_{$this->selectedSize}";
+        $this->output = "{$vendor}_{$this->calendarWeek}_{$campaign}_{$this->campaign_id}_{$this->selectedBanner}_{$this->selectedSize}";
     }
 } ?>
 
 <div>
-    <div class="p-6 max-w-md mx-auto text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 dark:bg-opacity-50">
+    <div class="p-6 mx-auto text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 dark:bg-opacity-50">
         <h2 class="text-lg font-bold mb-4">Banners & Graphics Naming Generator </h2>
-        <form>
+
            <!-- Vendors -->
             <div class="block mb-3">
                 <x-label >Vendor:</x-label>
                 <x-select type="text" wire:model="selectedVendor" class="mt-1 w-full"
-                        placeholder="e.g., Summer Sale" required>
+                        placeholder="e.g., Summer Sale">
                     <option value="">Select Vendor</option>
                     @foreach($vendors as $vendor)
                         <option value="{{ $vendor->name }}">{{ $vendor->name }}</option>
@@ -97,14 +97,14 @@ new class extends Component {
                 <!-- Campaign ID -->
                 <div class="block mb-3">
                     <x-label >Campaign ID:</x-label>
-                    <x-input type="text" wire:model="id" class="mt-1 w-full"
+                    <x-input type="text" wire:model="campaign_id" class="mt-1 w-full"
                              placeholder="e.g. IS200401"></x-input>
                 </div>
                 <!-- Calendar Week -->
                 <div class="block mb-3">
                     <x-label >Calendar Week:</x-label>
                     <x-input type="text" wire:model="calendarWeek" class="mt-1 w-full"
-                             placeholder="e.g. IS200401"></x-input>
+                             placeholder="e.g. 24CW45"></x-input>
                 </div>
             </div>
 
@@ -114,16 +114,28 @@ new class extends Component {
                 >
                 Generate Name
             </x-button>
-        </form>
+
 
         <!-- Display Generated Output -->
         @if($output)
             <div class="mt-4 p-4 rounded">
                 <h3 class="font-semibold">Generated Name:</h3>
-                <p>{{ $output }}</p>
+                <p id="generatedOutput">{{ $output }}</p>
+                <x-button id="copyButton" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded" onclick="copyToClipboard()">Copy</x-button>
             </div>
         @endif
 
     </div>
 
 </div>
+
+<script>
+    function copyToClipboard() {
+        const outputText = document.getElementById("generatedOutput").innerText;
+        navigator.clipboard.writeText(outputText).then(() => {
+            document.getElementById("copyButton").innerHTML = "Copied!";
+        }).catch(err => {
+            console.error("Failed to copy text: ", err);
+        });
+    }
+</script>
