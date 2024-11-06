@@ -26,7 +26,7 @@ class BannerList extends Component
     public function render()
     {
         return view('livewire.banners.banner-list', [
-            'banners' => Banner::select('id', 'name', 'description')->orderby('id', 'desc')->get(),
+            'banners' => Banner::select('id', 'name', 'sizes')->orderby('id', 'desc')->get(),
         ]);
     }
 
@@ -59,5 +59,4 @@ class BannerList extends Component
         $banner?->delete();
         session()->flash('success', 'Banner Deleted Successfully!!');
     }
-
 }

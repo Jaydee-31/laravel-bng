@@ -8,6 +8,18 @@ class Banner extends Model
 {
     protected $fillable = [
         'name',
-        'description',
+        'sizes',
     ];
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'sizes' => 'array',
+        ];
+    }
 }

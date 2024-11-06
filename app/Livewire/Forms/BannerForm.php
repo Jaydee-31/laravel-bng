@@ -10,26 +10,34 @@ class BannerForm extends Form
 {
     public ?Banner $banner;
     public $name = '';
-    public $description = '';
+    public $sizes = '';
 
     public function setBanner(Banner $banner)
     {
         $this->banner = $banner;
         $this->name = $banner->name;
-        $this->description = $banner->description;
+        $this->sizes = $banner->sizes;
     }
+
     public function store(): void
     {
         $this->validate();
-        Banner::create($this->only(['name', 'description']));
+
+        $sizesArray = explode(',', $this->sizes);
+
+        Banner::create([
+            'name' => $this->name,
+            'sizes' => $sizesArray,
+        ]);
+        // Banner::create($this->only(['name', 'sizes' => $sizesArray]));
 
         $this->reset();
-
     }
+
     public function update()
     {
         $this->validate();
-        $this->banner->update($this->only(['name', 'description']));
+        $this->banner->update($this->only(['name', 'sizes']));
 
         $this->reset();
     }
@@ -37,9 +45,8 @@ class BannerForm extends Form
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'description' => 'required',
+            'name' => 'required|string|max:255',
+            'sizes' => 'required|string',
         ];
     }
 }
-

@@ -40,7 +40,7 @@
                                             Name
                                         </th>
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider dark:text-gray-100">
-                                            Description
+                                            Sizes
                                         </th>
 
                                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider dark:text-gray-100">
@@ -61,7 +61,7 @@
                                             </td>
 
                                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white max-w-xs overflow-ellipsis truncate">
-                                                {{ $banner->description }}
+                                                {{ implode(', ', $banner->sizes) }}
                                             </td>
 
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">

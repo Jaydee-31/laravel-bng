@@ -13,16 +13,16 @@
                         <div class="pt-5 bg-white dark:bg-gray-800 dark:bg-opacity-50">
 
                             <div class=" py-3 sm:py-3">
-                                <x-label for="vendorName">Name</x-label>
+                                <x-label for="bannerName">Name</x-label>
                                 <x-input class="block mt-1 w-full" type="text" wire:model="form.name" placeholder="Enter Name" autofocus/>
                                 <x-input-error for="title" class="mt-1" />
                                 <x-input-error for="form.name" class="mt-2" />
                             </div>
 
                             <div class=" py-3 sm:py-3">
-                                <x-label for="vendorDescription">Description</x-label>
-                                <x-input class="block mt-1 w-full" type="text" wire:model="form.description" placeholder="Enter Description"></x-input>
-                                <x-input-error for="form.description" class="mt-2" />
+                                <x-label for="bannerSizes">Sizes (comma-separated)</x-label>
+                                <x-input class="block mt-1 w-full" type="text" wire:model="form.sizes" placeholder="510x170, 1200x628"></x-input>
+                                <x-input-error for="form.sizes" class="mt-2" />
                             </div>
 
                         </div>
