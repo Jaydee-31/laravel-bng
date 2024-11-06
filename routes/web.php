@@ -2,6 +2,7 @@
 
 use App\Livewire\BannerList;
 use Illuminate\Support\Facades\Route;
+use Livewire\Volt\Volt;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,5 +21,4 @@ Route::middleware([
     })->name('vendors');
 
     Route::get('/banners', BannerList::class)->name('banners');
-//    Route::get('/vendors', \App\Livewire\Vendor::class)->name('vendors');
 });
