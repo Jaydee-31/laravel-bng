@@ -7,7 +7,7 @@ use Livewire\Volt\Component;
 
 new class extends Component {
     public $countries = [];
-    public $vendors = [];
+    public $vendors;
     public $banners = [];
     public $sizes = [];
     public $calendarWeek;
@@ -20,33 +20,32 @@ new class extends Component {
     public $campaign_id;
     public $output = NULL;
 
-    public function mount()
+    public function mount(): void
     {
         $year = date("y");
         $weekNumber = date('W',);
 
         $this->calendarWeek = "{$year}CW{$weekNumber}";
+        $this->banners = Banner::select('name', 'sizes')->orderby('id', 'desc')->get();
         $this->vendors = Vendor::select('name')->orderby('id', 'desc')->get();
         $this->countries = Country::select('code', 'name', 'language_code')->orderby('code', 'asc')->get();
-        $this->banners = Banner::select('name', 'sizes')->orderby('id', 'desc')->get();
     }
 
     public function updatedSelectedBanner($banner)
     {
-        $this->mount();
-        $this->vendors = Vendor::select('name')->orderby('id', 'desc')->get();
-        $this->sizes = Banner::where('name', $banner)->first()->sizes;
+//        dd($banner);
+        $this->sizes = Banner::where('name', $banner)->value('sizes');
         $this->selectedSize = NULL;
     }
+
 
     public function generateName(): void
     {
         // Format the output as desired
-        $this->mount();
 
-        $this->selectedVendor = strtolower($this->selectedVendor);
+        $selectedVendors = strtolower($this->selectedVendor);
         $campaign = str_replace(' ', '', ucwords($this->campaign));
-        $this->output = "{$campaign}_{$this->campaign_id}_{$this->selectedBanner}_{$this->selectedSize}";
+        $this->output = "{$selectedVendors}_{$campaign}_{$this->campaign_id}_{$this->selectedBanner}_{$this->selectedSize}";
     }
 } ?>
 
@@ -57,7 +56,7 @@ new class extends Component {
         <!-- Vendors -->
         <div class="block mb-3">
             <x-label>Vendor:</x-label>
-            <x-select type="text" wire:model="selectedVendor" class="mt-1 w-full"
+            <x-select type="text" wire:model="selectedVendor" wire:ignore class="mt-1 w-full"
                       placeholder="e.g., Summer Sale">
                 <option value="">Select Vendor</option>
                 @foreach($vendors as $vendor)
@@ -70,7 +69,7 @@ new class extends Component {
             <!-- Banner Name -->
             <div class="block mb-3">
                 <x-label>Banner Name:</x-label>
-                <x-select wire:model.live="selectedBanner" class="mt-1 w-full">
+                <x-select wire:model.live="selectedBanner" wire:ignore class="mt-1 w-full">
                     <option value="">Select Banner</option>
                     @foreach($banners as $banner)
                         <option value="{{ $banner->name }}">{{ $banner->name }}</option>
