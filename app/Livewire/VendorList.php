@@ -28,9 +28,7 @@ class VendorList extends Component
 
     public function render()
     {
-        $this->vendors = Vendor::select('id', 'name', 'description')
-            ->when($this->search !== '', fn(Builder $query) => $query->where('name', 'like', '%'. $this->search .'%'))
-            ->orderby('id', 'desc')
+        $this->vendors = Vendor::search($this->search)->orderby('id', 'desc')
             ->get();
 
         return view('livewire.vendors.vendor-list', [
