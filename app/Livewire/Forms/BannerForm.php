@@ -37,7 +37,8 @@ class BannerForm extends Form
     public function update()
     {
         $this->validate();
-        $this->banner->update($this->only(['name', 'sizes']));
+        $sizesArray = explode(',', $this->sizes);
+        $this->banner->update(['name' => $this->name, 'sizes' => $sizesArray]);
 
         $this->reset();
     }
