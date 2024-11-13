@@ -16,36 +16,37 @@ new class extends Component {
     public $selectedSize = NULL;
     public $selectedBanner = NULL;
     public $selectedVendor = NULL;
+    public $selectedVendors = NULL;
     public $campaign;
     public $campaign_id;
     public $output = NULL;
 
-    public function mount(): void
+    public function mount()
     {
         $year = date("y");
         $weekNumber = date('W',);
 
         $this->calendarWeek = "{$year}CW{$weekNumber}";
+        $this->countries = Country::select('id', 'code', 'name', 'language_code')->orderby('id', 'asc')->get();
         $this->banners = Banner::select('name', 'sizes')->orderby('id', 'desc')->get();
         $this->vendors = Vendor::select('name')->orderby('id', 'desc')->get();
-        $this->countries = Country::select('code', 'name', 'language_code')->orderby('code', 'asc')->get();
     }
 
     public function updatedSelectedBanner($banner)
     {
-//        dd($banner);
+//        dd($this->countries, $this->vendors);
         $this->sizes = Banner::where('name', $banner)->value('sizes');
         $this->selectedSize = NULL;
     }
 
 
-    public function generateName(): void
+    public function generateName()
     {
-        // Format the output as desired
-
-        $selectedVendors = strtolower($this->selectedVendor);
+        $this->mount();
+        $this->selectedVendors = strtolower($this->selectedVendor);
         $campaign = str_replace(' ', '', ucwords($this->campaign));
-        $this->output = "{$selectedVendors}_{$campaign}_{$this->campaign_id}_{$this->selectedBanner}_{$this->selectedSize}";
+        $campaignId = str_replace(' ', '', ucwords($this->campaign_id));
+        $this->output = "{$campaign}_{$campaignId}_{$this->selectedBanner}_{$this->selectedSize}";
     }
 } ?>
 
@@ -147,36 +148,32 @@ new class extends Component {
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                                     {{ $country->code }}
                                 </td>
-
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white max-w-xs overflow-ellipsis truncate">
                                     {{ $country->name }}
                                 </td>
-
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white max-w-xs overflow-ellipsis truncate">
                                     {{ $country->language_code }}
                                 </td>
-
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    {{ $country->code }}_{{$this->selectedVendor}}_{{ $country->language_code }}{{ $output }}
+                                    <p id="generatedOutput{{$country->id}}">{{ $country->code }}_{{$this->selectedVendors}}_{{ $country->language_code }}{{ $output }}</p>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <x-button id="copyButton{{$country->id}}" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
+                                              onclick="copyToClipboard({{$country->id}})">Copy
+                                    </x-button>
                                 </td>
                             </tr>
                         @empty
                             <tr>
                                 <td colspan="4" class="px-6 py-4 dark:text-white text-sm leading-5 text-gray-900 whitespace-no-wrap">
-                                    No countries Found.
+                                    No countries found.
                                 </td>
                             </tr>
                         @endforelse
+
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div class="mt-4 p-4 rounded">
-                <h3 class="font-semibold">Generated Name:</h3>
-                <p id="generatedOutput">{{ $this->output }}</p>
-                <x-button id="copyButton" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
-                          onclick="copyToClipboard()">Copy
-                </x-button>
             </div>
         @endif
 
@@ -185,10 +182,11 @@ new class extends Component {
 </div>
 
 <script>
-    function copyToClipboard() {
-        const outputText = document.getElementById("generatedOutput").innerText;
+    function copyToClipboard(id) {
+        console.log(id); // Logs the actual id
+        const outputText = document.getElementById(`generatedOutput${id}`).innerText;
         navigator.clipboard.writeText(outputText).then(() => {
-            document.getElementById("copyButton").innerHTML = "Copied!";
+            document.getElementById(`copyButton${id}`).innerHTML = "Copied!";
         }).catch(err => {
             console.error("Failed to copy text: ", err);
         });
