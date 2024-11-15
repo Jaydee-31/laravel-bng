@@ -7,18 +7,18 @@ use Livewire\Volt\Component;
 
 new class extends Component {
     public $countries = [];
-    public $vendors;
+    public $vendors = [];
     public $banners = [];
     public $sizes = [];
-    public $calendarWeek;
     public $prefix = NULL;
-
+    
     public $selectedSize = NULL;
     public $selectedBanner = NULL;
     public $selectedVendor = NULL;
     public $selectedVendors = NULL;
     public $campaign;
     public $campaign_id;
+    public $calendarWeek;
     public $output = NULL;
 
     public function mount()
@@ -41,6 +41,14 @@ new class extends Component {
 
     public function generateName()
     {
+        $this->validate([ 
+            'selectedVendor' => 'required',
+            'selectedBanner' => 'required',
+            'selectedSize' => 'required',
+            'campaign' => 'required',
+            'campaign_id' => 'required',
+            'calendarWeek' => ['required', 'regex:/^\d{2}CW\d{2}$/'],
+        ]);
         // $this->mount();
         $this->selectedVendors = strtolower($this->selectedVendor);
         $campaign = str_replace(' ', '', ucwords($this->campaign));
@@ -50,70 +58,76 @@ new class extends Component {
 } ?>
 
 <div>
-    <div class="p-6 flex flex-col text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 dark:bg-opacity-50 mb-6">
-        <h2 class="text-lg font-bold mb-4">Banners & Graphics Naming Generator </h2>
+    <form wire:submit="generateName">
+        <div class="p-6 flex flex-col text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 dark:bg-opacity-50 mb-6">
+            <h2 class="text-lg font-bold mb-4">Banners & Graphics Naming Generator </h2>
 
-        <!-- Vendors -->
-        <div class="block mb-6">
-            <x-label>Vendor:</x-label>
-            <x-select type="text" wire:model="selectedVendor" wire:ignore class="mt-1 w-full"
-                      placeholder="e.g., Summer Sale">
-                <option value="">Select Vendor</option>
-                @foreach($vendors as $vendor)
-                    <option value="{{ $vendor->name }}">{{ $vendor->name }}</option>
-                @endforeach
-            </x-select>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-            <!-- Banner Name -->
-            <div class="block mb-3">
-                <x-label>Banner Name:</x-label>
-                <x-select wire:model.live="selectedBanner" wire:ignore class="mt-1 w-full">
-                    <option value="">Select Banner</option>
-                    @foreach($banners as $banner)
-                        <option value="{{ $banner->name }}">{{ $banner->name }}</option>
+            <!-- Vendors -->
+            <div class="block mb-6">
+                <x-label>Vendor:</x-label>
+                <x-select type="text" wire:model="selectedVendor" wire:ignore class="mt-1 w-full"
+                        placeholder="e.g., Summer Sale">
+                    <option value="">Select Vendor</option>
+                    @foreach($vendors as $vendor)
+                        <option value="{{ $vendor->name }}">{{ $vendor->name }}</option>
                     @endforeach
                 </x-select>
+                <x-input-error for="selectedVendor" class="mt-2" />
             </div>
-            <!-- Size-->
-            <div class="block mb-3">
-                <x-label>Size:</x-label>
-                <x-select type="text" wire:model="selectedSize" class="mt-1 w-full"
-                          placeholder="e.g., Summer Sale">
-                    <option value="">Select Size</option>
-                    @foreach($sizes as $size)
-                        <option value="{{ $size }}">{{ $size }}</option>
-                    @endforeach
-                </x-select>
-            </div>
-            <!-- Campaign -->
-            <div class="block mb-3">
-                <x-label>Campaign Name:</x-label>
-                <x-input type="text" wire:model="campaign" class="mt-1 w-full"
-                         placeholder="e.g. Promo"></x-input>
-            </div>
-            <!-- Campaign ID -->
-            <div class="block mb-3">
-                <x-label>Campaign ID:</x-label>
-                <x-input type="text" wire:model="campaign_id" class="mt-1 w-full"
-                         placeholder="e.g. IS200401"></x-input>
-            </div>
-            <!-- Calendar Week -->
-            <div class="block mb-3">
-                <x-label>Calendar Week:</x-label>
-                <x-input type="text" wire:model="calendarWeek" class="mt-1 w-full"
-                         placeholder="e.g. 24CW45"></x-input>
-            </div>
-        </div>
 
-        <!-- Generate Button -->
-        <x-button wire:click="generateName"
-                  class="self-center mt-6"
-        >
-            Generate Name
-        </x-button>
-    </div>
+            <div class="grid grid-cols-2 gap-3">
+                <!-- Banner Name -->
+                <div class="block mb-3">
+                    <x-label>Banner Name:</x-label>
+                    <x-select wire:model.live="selectedBanner" wire:ignore class="mt-1 w-full">
+                        <option value="">Select Banner</option>
+                        @foreach($banners as $banner)
+                            <option value="{{ $banner->name }}">{{ $banner->name }}</option>
+                        @endforeach
+                    </x-select>
+                    <x-input-error for="selectedBanner" class="mt-2" />
+                </div>
+                <!-- Size-->
+                <div class="block mb-3">
+                    <x-label>Size:</x-label>
+                    <x-select type="text" wire:model="selectedSize" class="mt-1 w-full"
+                            placeholder="e.g., Summer Sale">
+                        <option value="">Select Size</option>
+                        @foreach($sizes as $size)
+                            <option value="{{ $size }}">{{ $size }}</option>
+                        @endforeach
+                    </x-select>
+                    <x-input-error for="selectedSize" class="mt-2" />
+                </div>
+                <!-- Campaign -->
+                <div class="block mb-3">
+                    <x-label>Campaign Name:</x-label>
+                    <x-input type="text" wire:model="campaign" class="mt-1 w-full"
+                            placeholder="e.g. Promo"></x-input>
+                    <x-input-error for="campaign" class="mt-2" />
+                </div>
+                <!-- Campaign ID -->
+                <div class="block mb-3">
+                    <x-label>Campaign ID:</x-label>
+                    <x-input type="text" wire:model="campaign_id" class="mt-1 w-full"
+                            placeholder="e.g. IS200401"></x-input>
+                    <x-input-error for="campaign_id" class="mt-2" />
+                </div>
+                <!-- Calendar Week -->
+                <div class="block mb-3">
+                    <x-label>Calendar Week:</x-label>
+                    <x-input type="text" wire:model="calendarWeek" class="mt-1 w-full"
+                            placeholder="e.g. 24CW45"></x-input>
+                    <x-input-error for="calendarWeek" class="mt-2" />
+                </div>
+            </div>
+
+            <!-- Generate Button -->
+            <x-button wire:click="generateName" class="self-center mt-6">
+                Generate Name
+            </x-button>
+        </div>
+    </form>
 
     <!-- Display Generated Output -->
         @if($output)
