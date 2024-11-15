@@ -59,7 +59,7 @@ new class extends Component {
 
 <div>
     <form wire:submit="generateName">
-        <div class="p-6 flex flex-col text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 dark:bg-opacity-50 mb-6">
+        <div class="p-6 flex flex-col text-gray-900 sm:rounded-lg dark:text-gray-100 bg-white dark:bg-gray-800 dark:bg-opacity-50 mb-6">
             <h2 class="text-lg font-bold mb-4">Banners & Graphics Naming Generator </h2>
 
             <!-- Vendors -->
