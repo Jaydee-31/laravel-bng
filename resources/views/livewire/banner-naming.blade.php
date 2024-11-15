@@ -34,7 +34,6 @@ new class extends Component {
 
     public function updatedSelectedBanner($banner)
     {
-//        dd($this->countries, $this->vendors);
         $this->sizes = Banner::where('name', $banner)->value('sizes');
         $this->selectedSize = NULL;
     }
@@ -42,7 +41,7 @@ new class extends Component {
 
     public function generateName()
     {
-        $this->mount();
+        // $this->mount();
         $this->selectedVendors = strtolower($this->selectedVendor);
         $campaign = str_replace(' ', '', ucwords($this->campaign));
         $campaignId = str_replace(' ', '', ucwords($this->campaign_id));
@@ -51,11 +50,11 @@ new class extends Component {
 } ?>
 
 <div>
-    <div class="p-6 mx-auto text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 dark:bg-opacity-50">
+    <div class="p-6 flex flex-col text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-800 dark:bg-opacity-50 mb-6">
         <h2 class="text-lg font-bold mb-4">Banners & Graphics Naming Generator </h2>
 
         <!-- Vendors -->
-        <div class="block mb-3">
+        <div class="block mb-6">
             <x-label>Vendor:</x-label>
             <x-select type="text" wire:model="selectedVendor" wire:ignore class="mt-1 w-full"
                       placeholder="e.g., Summer Sale">
@@ -110,55 +109,55 @@ new class extends Component {
 
         <!-- Generate Button -->
         <x-button wire:click="generateName"
-                  class="flex self-end self-baseline mt-6"
+                  class="self-center mt-6"
         >
             Generate Name
         </x-button>
+    </div>
 
-
-        <!-- Display Generated Output -->
+    <!-- Display Generated Output -->
         @if($output)
-            <div class="overflow-hidden overflow-x-auto card-body">
-                <div class="table-responsive">
-                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 w-full">
-                        <thead>
-                        <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider dark:text-gray-100 ">
-                                Sales Org
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider dark:text-gray-100">
-                                Country Name
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider dark:text-gray-100">
-                                Language Code
-                            </th>
+            <div class="">
+               <div class="relative overflow-x-auto shadow-md sm:rounded-lg bg-white dark:bg-gray-800 dark:bg-opacity-50">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Sales Org
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Country Name
+                                </th>
+                                <th scope="col" class="px-6 py-3 w-1">
+                                    Language Code
+                                </th>
 
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider dark:text-gray-100">
-                                Result
-                            </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider dark:text-gray-100">
-                                Copy Link
-                            </th>
-                        </tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Result
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Copy Link
+                                </th>
+                            </tr>
                         </thead>
 
-                        <tbody class="bg-white dark:bg-gray-800 dark:bg-opacity-50 divide-y divide-gray-200 dark:divide-gray-700">
+                        <tbody class="">
                         @forelse($countries as $country)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
+                            <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                                <td class="px-6 py-4">
                                     {{ $country->code }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white max-w-xs overflow-ellipsis truncate">
+                                <td class="px-6 py-4">
                                     {{ $country->name }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white max-w-xs overflow-ellipsis truncate">
+                                <td class="px-6 py-4">
                                     {{ $country->language_code }}
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                <td class="px-6 py-4">
                                     <p id="generatedOutput{{$country->id}}">{{ $country->code }}_{{$this->selectedVendors}}_{{ $country->language_code }}{{ $output }}</p>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                    <x-button id="copyButton{{$country->id}}" class="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
+                                <td class="px-6 py-4">
+                                    <x-button id="copyButton{{$country->id}}" class="px-4 py-2 bg-blue-500 text-white rounded"
                                               onclick="copyToClipboard({{$country->id}})">Copy
                                     </x-button>
                                 </td>
@@ -177,8 +176,6 @@ new class extends Component {
             </div>
         @endif
 
-    </div>
-
 </div>
 
 <script>
@@ -186,7 +183,11 @@ new class extends Component {
         console.log(id); // Logs the actual id
         const outputText = document.getElementById(`generatedOutput${id}`).innerText;
         navigator.clipboard.writeText(outputText).then(() => {
-            document.getElementById(`copyButton${id}`).innerHTML = "Copied!";
+            const copyButton = document.getElementById(`copyButton${id}`);
+            copyButton.innerHTML = "Copied!";
+            setTimeout(() => {
+                copyButton.innerHTML = "Copy";
+            }, 2000); // 1 second
         }).catch(err => {
             console.error("Failed to copy text: ", err);
         });
