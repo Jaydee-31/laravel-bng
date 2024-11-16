@@ -20,15 +20,18 @@
                 @endif
             </div>
 
-            <x-button wire:click="openModal" wire:loading.attr="disabled">
-                {{ __('Add') }}
-            </x-button>
+            <div class="flex justify-between">
+                <x-button wire:click="openModal" wire:loading.attr="disabled">
+                    {{ __('Add') }}
+                </x-button>
+                <x-input wire:model.live="search" type="text" placeholder="Search vendors.."/>
+            </div>
 
             @include('livewire.banners.banner-form')
 
             <div class="col-md-8 mt-6">
                 <div class="card">
-                    <div class="overflow-hidden overflow-x-auto card-body">
+                    <div class="overflow-hidden overflow-x-auto card-body mb-3">
                         <div class="table-responsive">
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 w-full">
                                 <thead>
@@ -84,6 +87,7 @@
                             </table>
                         </div>
                     </div>
+                    {{ $banners->links() }}
                 </div>
             </div>
         </div>

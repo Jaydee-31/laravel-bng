@@ -5,10 +5,15 @@ namespace App\Livewire;
 use App\Livewire\Forms\BannerForm;
 use App\Models\Banner;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class BannerList extends Component
 {
+    use WithPagination;
+
     public BannerForm $form;
+
+    public $search = '';
     public $openBannerModal = false;
     public $isEditMode = false;
 
@@ -23,10 +28,15 @@ class BannerList extends Component
         $this->openBannerModal = true;
     }
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
         return view('livewire.banners.banner-list', [
-            'banners' => Banner::select('id', 'name', 'sizes')->orderby('id', 'desc')->get(),
+            'banners' => Banner::search($this->search)->orderby('id', 'desc')->paginate(10),
         ]);
     }
 
