@@ -86,7 +86,7 @@ new class extends Component {
 <div>
     <form wire:submit="generateName">
         <div
-            class="p-6 flex flex-col text-gray-900 sm:rounded-lg dark:text-gray-100 bg-white dark:bg-neutral-900 dark:bg-opacity-90 mb-6">
+            class="p-6 flex flex-col text-neutral-900 sm:rounded-lg dark:text-neutral-100 bg-white dark:bg-neutral-900 dark:bg-opacity-90 mb-6">
             <!-- Vendors -->
             <div class="block mb-6">
                 <x-label>Vendor:</x-label>
@@ -158,9 +158,9 @@ new class extends Component {
     <!-- Display Generated Output -->
     @if($output)
         <div class="">
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg bg-white dark:bg-gray-800 dark:bg-opacity-50">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg bg-white dark:bg-neutral-900 dark:bg-opacity-50">
+                <table class="w-full text-sm text-left rtl:text-right text-neutral-500 dark:text-neutral-400">
+                    <thead class="text-xs text-neutral-700 uppercase bg-neutral-50 dark:bg-neutral-800 dark:text-neutral-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             Sales Org
@@ -183,7 +183,7 @@ new class extends Component {
 
                     <tbody class="">
                     @forelse($countries as $country)
-                        <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                        <tr class="odd:bg-white odd:dark:bg-neutral-900 even:bg-neutral-50 even:dark:bg-neutral-900 border-b dark:border-neutral-800">
                             <td class="px-6 py-4">
                                 {{ $country->code }}
                             </td>
@@ -198,16 +198,16 @@ new class extends Component {
                                     _{{ $country->language_code }}{{ $output }}</p>
                             </td>
                             <td class="px-6 py-4">
-                                <x-button id="copyButton{{$country->id}}"
-                                          class="px-4 py-2 bg-blue-500 text-white rounded"
+                                <x-copy-button id="copyButton{{$country->id}}"
+                                          class="py-1 px-4 bg-blue-500 text-white rounded-xl"
                                           onclick="copyToClipboard({{$country->id}})">Copy
-                                </x-button>
+                                </x-copy-button>
                             </td>
                         </tr>
                     @empty
                         <tr>
                             <td colspan="4"
-                                class="px-6 py-4 dark:text-white text-sm leading-5 text-gray-900 whitespace-no-wrap">
+                                class="px-6 py-4 dark:text-white text-sm leading-5 text-neutral-900 whitespace-no-wrap">
                                 No countries found.
                             </td>
                         </tr>
