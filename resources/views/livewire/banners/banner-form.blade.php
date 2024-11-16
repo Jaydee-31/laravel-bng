@@ -15,7 +15,6 @@
                             <div class=" py-3 sm:py-3">
                                 <x-label for="bannerName">Name</x-label>
                                 <x-input class="block mt-1 w-full" type="text" wire:model="form.name" placeholder="Enter Name" autofocus/>
-                                <x-input-error for="title" class="mt-1" />
                                 <x-input-error for="form.name" class="mt-2" />
                             </div>
 

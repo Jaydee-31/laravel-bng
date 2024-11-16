@@ -12,6 +12,7 @@ class VendorList extends Component
     use WithPagination;
 
     public $search = '';
+    public $name, $description, $vendor_id;
     public $updateVendor = false;
     public $openingModal = false;
     protected $listeners = [

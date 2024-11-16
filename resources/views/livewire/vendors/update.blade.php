@@ -12,16 +12,15 @@
                     <div class="overflow-hidden">
                         <div class="pt-5 bg-white dark:bg-gray-800 dark:bg-opacity-50">
                             <div class=" py-3 sm:py-3">
-                                <x-label for="vendorName">Name</x-label>
+                                <x-label for="name">Name</x-label>
                                 <x-input class="block mt-1 w-full" type="text" wire:model="name" placeholder="Enter Name"/>
-                                <x-input-error for="title" class="mt-1" />
-                                @error('name') <span class="text-danger">{{ $message }}</span>@enderror
+                                <x-input-error for="name" class="mt-1" />
                             </div>
 
                              <div class=" py-3 sm:py-3">
-                                <x-label for="vendorDescription">Description</x-label>
+                                <x-label for="description">Description</x-label>
                                 <x-input class="block mt-1 w-full" type="text" wire:model="description" placeholder="Enter Description"></x-input>
-                                @error('description') <span class="text-danger">{{ $message }}</span>@enderror
+                                <x-input-error for="description" class="mt-1" />
                             </div>
 
                         </div>

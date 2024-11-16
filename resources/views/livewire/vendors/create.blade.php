@@ -15,14 +15,13 @@
                             <div class=" py-3 sm:py-3">
                                 <x-label for="vendorName">Name</x-label>
                                 <x-input class="block mt-1 w-full" type="text" wire:model="name" placeholder="Enter Name" autofocus/>
-                                <x-input-error for="title" class="mt-1" />
-                                @error('name') <span class="text-danger">{{ $message }}</span>@enderror
+                                <x-input-error for="name" class="mt-1" />
                             </div>
 
                             <div class=" py-3 sm:py-3">
                                 <x-label for="vendorDescription">Description</x-label>
                                 <x-input class="block mt-1 w-full" type="text" wire:model="description" placeholder="Enter Description"></x-input>
-                                @error('description') <span class="text-danger">{{ $message }}</span>@enderror
+                                <x-input-error for="description" class="mt-1" />
                             </div>
 
                         </div>
