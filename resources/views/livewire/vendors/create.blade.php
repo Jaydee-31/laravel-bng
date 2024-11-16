@@ -10,8 +10,7 @@
             <div class="">
                 <div class="">
                     <div class="overflow-hidden">
-                        <div class="pt-5 bg-white dark:bg-gray-800 dark:bg-opacity-50">
-
+                        <div class="pt-3">
                             <div class=" py-3 sm:py-3">
                                 <x-label for="vendorName">Name</x-label>
                                 <x-input class="block mt-1 w-full" type="text" wire:model="name" placeholder="Enter Name" autofocus/>
