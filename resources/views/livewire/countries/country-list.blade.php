@@ -24,7 +24,7 @@
                 {{ __('Add') }}
             </x-button>
 
-{{--            @include('livewire.countrys.country-form')--}}
+            @include('livewire.countries.country-form')
 
             <div class="col-md-8 mt-6">
                 <div class="card">
