@@ -11,11 +11,11 @@ new class extends Component {
     public $banners = [];
     public $sizes = [];
     public $prefix = NULL;
-    
+
     public $selectedSize = NULL;
     public $selectedBanner = NULL;
     public $selectedVendor = NULL;
-    public $selectedVendors = NULL;
+    public $selectedVendors = [];
     public $campaign;
     public $campaign_id;
     public $calendarWeek;
@@ -41,16 +41,15 @@ new class extends Component {
 
     public function generateName()
     {
-        $this->validate([ 
-            'selectedVendor' => 'required',
+        $this->validate([
+            'selectedVendors' => 'required',
             'selectedBanner' => 'required',
             'selectedSize' => 'required',
             'campaign' => 'required',
             'campaign_id' => 'required',
             'calendarWeek' => ['required', 'regex:/^\d{2}CW\d{2}$/'],
         ]);
-        // $this->mount();
-        $this->selectedVendors = strtolower($this->selectedVendor);
+        $this->selectedVendor = implode('&', array_map('strtolower', $this->selectedVendors));
         $campaign = str_replace(' ', '', ucwords($this->campaign));
         $campaignId = str_replace(' ', '', ucwords($this->campaign_id));
         $this->output = "{$campaign}_{$campaignId}_{$this->selectedBanner}_{$this->selectedSize}";
@@ -61,18 +60,18 @@ new class extends Component {
     <form wire:submit="generateName">
         <div class="p-6 flex flex-col text-gray-900 sm:rounded-lg dark:text-gray-100 bg-white dark:bg-gray-800 dark:bg-opacity-50 mb-6">
             <h2 class="text-lg font-bold mb-4">Banners & Graphics Naming Generator </h2>
-
             <!-- Vendors -->
             <div class="block mb-6">
                 <x-label>Vendor:</x-label>
-                <x-select type="text" wire:model="selectedVendor" wire:ignore class="mt-1 w-full"
-                        placeholder="e.g., Summer Sale">
+                <x-select type="text" wire:model="selectedVendors" wire:ignore class="mt-1 w-full"
+                        placeholder="e.g., Summer Sale"
+                        multiple="">
                     <option value="">Select Vendor</option>
                     @foreach($vendors as $vendor)
                         <option value="{{ $vendor->name }}">{{ $vendor->name }}</option>
                     @endforeach
                 </x-select>
-                <x-input-error for="selectedVendor" class="mt-2" />
+                <x-input-error for="selectedVendors" class="mt-2" />
             </div>
 
             <div class="grid grid-cols-2 gap-3">
@@ -168,7 +167,7 @@ new class extends Component {
                                     {{ $country->language_code }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    <p id="generatedOutput{{$country->id}}">{{ $country->code }}_{{$this->selectedVendors}}_{{ $country->language_code }}{{ $output }}</p>
+                                    <p id="generatedOutput{{$country->id}}">{{ $country->code }}_{{$this->selectedVendor}}_{{ $country->language_code }}{{ $output }}</p>
                                 </td>
                                 <td class="px-6 py-4">
                                     <x-button id="copyButton{{$country->id}}" class="px-4 py-2 bg-blue-500 text-white rounded"
