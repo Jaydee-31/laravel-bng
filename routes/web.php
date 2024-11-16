@@ -2,6 +2,7 @@
 
 use App\Livewire\BannerList;
 use App\Livewire\CountryList;
+use App\Livewire\VendorList;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 

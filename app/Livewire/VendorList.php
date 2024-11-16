@@ -5,11 +5,13 @@ namespace App\Livewire;
 use App\Models\Vendor;
 use Livewire\Component;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\WithPagination;
 
 class VendorList extends Component
 {
+    use WithPagination;
+
     public $search = '';
-    public $vendors, $name, $description, $vendor_id;
     public $updateVendor = false;
     public $openingModal = false;
     protected $listeners = [
@@ -26,13 +28,16 @@ class VendorList extends Component
         $this->openingModal = true;
     }
 
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
     public function render()
     {
-        $this->vendors = Vendor::search($this->search)->orderby('id', 'desc')
-            ->get();
-
         return view('livewire.vendors.vendor-list', [
-            'vendors' => $this->vendors,
+            'vendors' => Vendor::search($this->search)->orderby('id', 'desc')
+                ->paginate(10),
         ]);
     }
     public function resetFields()
