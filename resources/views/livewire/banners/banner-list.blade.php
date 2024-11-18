@@ -9,9 +9,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="col-md-8 mb-2">
                 @if(session()->has('success'))
-                <x-alert>
+                <x-alert-top-right>
                     {{ session()->get('success') }}
-                </x-alert>
+                </x-alert-top-right>
                 @endif
                 @if(session()->has('error'))
                 <x-alert>
