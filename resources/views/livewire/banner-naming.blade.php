@@ -182,6 +182,20 @@ new class extends Component {
             </div>
 
             <div class="grid grid-cols-2 gap-3">
+                <!-- Campaign -->
+                <div class="block mb-3">
+                    <x-label>Campaign Name:</x-label>
+                    <x-input type="text" wire:model="campaign" class="mt-1 w-full"
+                        placeholder="e.g. Promo"></x-input>
+                    <x-input-error for="campaign" class="mt-2" />
+                </div>
+                <!-- Campaign ID -->
+                <div class="block mb-3">
+                    <x-label>Campaign ID:</x-label>
+                    <x-input type="text" wire:model="campaign_id" class="mt-1 w-full"
+                        placeholder="e.g. IS200401"></x-input>
+                    <x-input-error for="campaign_id" class="mt-2" />
+                </div>
                 <!-- Banner Name -->
                 <div class="block mb-3">
                     <x-label>Banner Name:</x-label>
@@ -204,20 +218,6 @@ new class extends Component {
                         @endforeach
                     </x-select>
                     <x-input-error for="selectedSize" class="mt-2" />
-                </div>
-                <!-- Campaign -->
-                <div class="block mb-3">
-                    <x-label>Campaign Name:</x-label>
-                    <x-input type="text" wire:model="campaign" class="mt-1 w-full"
-                        placeholder="e.g. Promo"></x-input>
-                    <x-input-error for="campaign" class="mt-2" />
-                </div>
-                <!-- Campaign ID -->
-                <div class="block mb-3">
-                    <x-label>Campaign ID:</x-label>
-                    <x-input type="text" wire:model="campaign_id" class="mt-1 w-full"
-                        placeholder="e.g. IS200401"></x-input>
-                    <x-input-error for="campaign_id" class="mt-2" />
                 </div>
                 <!-- Calendar Week -->
                 <div class="block mb-3">
