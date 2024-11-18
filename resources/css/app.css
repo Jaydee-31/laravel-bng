@@ -5,3 +5,8 @@
 [x-cloak] {
     display: none;
 }
+
+.x-vendors ul {
+    scrollbar-width: normal;
+    scrollbar-color: #151515 rgb(38 38 38 / var(--tw-bg-opacity));
+}

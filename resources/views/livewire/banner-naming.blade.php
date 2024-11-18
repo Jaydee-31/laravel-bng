@@ -147,7 +147,7 @@ new class extends Component {
                 </div>
                 <div
                     x-data="{ open: false }"
-                    class="relative">
+                    class="relative x-vendors">
                     <div class="block" x-on:click="open = true">
                         <x-label>Select vendors (maximum 4):</x-label>
                         <x-input
@@ -164,7 +164,7 @@ new class extends Component {
                     <ul
                         x-show="open"
                         x-on:click.away="open = false"
-                        class="bg-white text-gray-700 dark:bg-neutral-800 dark:text-gray-50 rounded shadow-lg absolute py-2 mt-1"
+                        class="overflow-y-auto h-96 bg-white text-gray-700 dark:bg-neutral-800 dark:text-gray-50 rounded shadow-lg absolute py-2 mt-1"
                         style="min-width:15rem">
 
                         @forelse($vendors as $vendor)
