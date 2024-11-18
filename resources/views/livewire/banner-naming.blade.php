@@ -14,7 +14,7 @@ new class extends Component {
     public $sizes = [];
     public $prefix = NULL;
 
-    #[Validate('required', message: 'Please select at least one vendor.')]
+    // #[Validate('required', message: 'Please select at least one vendor.')]
     public $selectedVendors = [];
     public $selectedVendorNames = NULL;
     public $selectedSize = NULL;
@@ -39,7 +39,18 @@ new class extends Component {
 
     public function updatedSearchVendor()
     {
+        $vendorIds = [];
+
+        // If there are selected vendors, populate $vendorIds array
+        if (!empty($this->selectedVendors)) {
+            foreach ($this->selectedVendors as $vendor) {
+                $vendorIds[] = $vendor->id;
+            }
+        }
+
+        // Query vendors, excluding those already selected
         $this->vendors = Vendor::search($this->searchVendor)
+            ->whereNotIn('id', $vendorIds)
             ->orderBy('id', 'desc')
             ->get();
     }
@@ -47,12 +58,16 @@ new class extends Component {
     public function selectVendor(Vendor $vendor)
     {
         $this->selectedVendors[] = $vendor;
+
+        $this->updatedSearchVendor();
     }
 
     public function removeVendor(Vendor $vendor)
     {
         $removedVendors[] = $vendor;
         $this->selectedVendors = array_diff($this->selectedVendors, $removedVendors);
+
+        $this->updatedSearchVendor();
     }
 
     public function updatedSelectedBanner($banner)
@@ -72,7 +87,6 @@ new class extends Component {
             $vendorNames[] = $vendor->name; // Assuming 'name' is the attribute you want
         }
 
-
         $this->selectedVendorNames = implode('&', array_map('strtolower', $vendorNames));
         $campaign = str_replace(' ', '', ucwords($this->campaign));
         $campaignId = str_replace(' ', '', ucwords($this->campaign_id));
@@ -82,7 +96,7 @@ new class extends Component {
     public function rules()
     {
         return [
-            'selectedVendors' => 'required',
+            'selectedVendors' => 'required|array|max:4',
             'selectedBanner' => 'required',
             'selectedSize' => 'required',
             'campaign' => 'required',
@@ -94,6 +108,7 @@ new class extends Component {
     public function messages()
     {
         return [
+            'selectedVendors.required' => 'Please select at least one vendor.',
             'calendarWeek.regex' => 'The :attribute must be in the format YYCWXX where YY = Year and XX = Week. Both numbers.',
         ];
     }
@@ -145,20 +160,22 @@ new class extends Component {
                         </x-input>
                         <x-input-error for="selectedVendors" class="mt-2" />
                     </div>
+
                     <ul
                         x-show="open"
                         x-on:click.away="open = false"
                         class="bg-white text-gray-700 dark:bg-neutral-800 dark:text-gray-50 rounded shadow-lg absolute py-2 mt-1"
                         style="min-width:15rem">
 
-                        @foreach($vendors as $vendor)
+                        @forelse($vendors as $vendor)
                         <li>
                             <p wire:click="selectVendor({{ $vendor }})" class="block hover:bg-gray-200 dark:hover:bg-neutral-900 whitespace-no-wrap py-2 px-4">
                                 {{ $vendor->name }}
                             </p>
                         </li>
-                        <!-- <option value="{{ $vendor->name }}">{{ $vendor->name }}</option> -->
-                        @endforeach
+                        @empty
+                        <p class="block whitespace-no-wrap py-2 px-4">No vendors found.</p>
+                        @endforelse
 
                     </ul>
                 </div>
